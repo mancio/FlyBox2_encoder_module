@@ -18,11 +18,57 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include <Arduino.h>
+#include <setmicro.h>
+#include <Encoders.h>
+#include <portsetup.h>
+#include <Timer.h>
+
+
+
+int ENC_delay = 0;
+int ENC_click_delay = 100;
+int loop_delay = 0; 
+
+Encoders_ Enc1(ENC1_CLK,ENC1_DT,ENC1_SW);
+Timer_ LoopTimer;
 
 void setup() {
-  // put your setup code here, to run once:
+  setLed();
+  setPort();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  if(LoopTimer.expired(loop_delay)){
+    if(Enc1.direction(ENC_delay) == 1){
+      digitalWrite(ENC1_right,HIGH);
+      digitalWrite(ENC1_left,LOW);
+      /*Serial.print("ENC1 right = ");
+      Serial.print("HIGH");
+      Serial.println();*/
+    }else if(Enc1.direction(ENC_delay) == -1){
+      digitalWrite(ENC1_left,HIGH);
+      digitalWrite(ENC1_right,HIGH);
+      /*Serial.print(" ENC1 left = ");
+      Serial.println("HIGH");*/
+    }else {
+      digitalWrite(ENC1_left,LOW);
+      digitalWrite(ENC1_right,LOW);
+    }
+    
+    if(Enc1.click(ENC_click_delay) == LOW){
+      digitalWrite(ENC1_SW_OUT, LOW);
+      //Serial.println(" ENC1 click");
+    }else{
+      digitalWrite(ENC1_SW_OUT, HIGH);
+      //Serial.println(" ENC1 No click");
+    }
+    LoopTimer.update();
+  }
+
+  //resetEnc();
+  /*Serial.println("");
+  Serial.print("ENC1 right = ");
+  Serial.print("LOW");
+  Serial.print(" ENC1 left = ");
+  Serial.print("LOW");*/
 }
