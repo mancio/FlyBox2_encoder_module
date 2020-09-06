@@ -47,12 +47,13 @@ void loop() {
       Serial.println();*/
     }else if(Enc1.direction(ENC_delay) == -1){
       digitalWrite(ENC1_left,HIGH);
-      digitalWrite(ENC1_right,HIGH);
+      digitalWrite(ENC1_right,LOW);
       /*Serial.print(" ENC1 left = ");
       Serial.println("HIGH");*/
     }else {
       digitalWrite(ENC1_left,LOW);
       digitalWrite(ENC1_right,LOW);
+      //Serial.println("stop");
     }
     
     if(Enc1.click(ENC_click_delay) == LOW){
