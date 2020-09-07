@@ -3,10 +3,10 @@
 //#include <main.cpp>
 
 
-
-void activeSerial(){
+// keep off for better performance
+/*void activeSerial(){
     Serial.begin(9600);
-}
+}*/
 
 void setPort(){
     pinMode(ENC1_CLK, INPUT);
