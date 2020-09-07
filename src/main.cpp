@@ -27,10 +27,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 int ENC_delay = 0;
 int ENC_click_delay = 100;
-int loop_delay = 0; 
+int dir_delay = 100; 
+int dir = 0;
 
 Encoders_ Enc1(ENC1_CLK,ENC1_DT,ENC1_SW);
-Timer_ LoopTimer;
+Timer_ DirTimer;
 
 void setup() {
   setLed();
@@ -38,38 +39,39 @@ void setup() {
 }
 
 void loop() {
-  if(LoopTimer.expired(loop_delay)){
-    if(Enc1.direction(ENC_delay) == 1){
-      digitalWrite(ENC1_right,HIGH);
-      digitalWrite(ENC1_left,LOW);
-      /*Serial.print("ENC1 right = ");
-      Serial.print("HIGH");
-      Serial.println();*/
-    }else if(Enc1.direction(ENC_delay) == -1){
-      digitalWrite(ENC1_left,HIGH);
-      digitalWrite(ENC1_right,LOW);
-      /*Serial.print(" ENC1 left = ");
-      Serial.println("HIGH");*/
-    }else {
-      digitalWrite(ENC1_left,LOW);
-      digitalWrite(ENC1_right,LOW);
-      //Serial.println("stop");
-    }
-    
-    if(Enc1.click(ENC_click_delay) == LOW){
-      digitalWrite(ENC1_SW_OUT, LOW);
-      //Serial.println(" ENC1 click");
-    }else{
-      digitalWrite(ENC1_SW_OUT, HIGH);
-      //Serial.println(" ENC1 No click");
-    }
-    LoopTimer.update();
+
+  if(DirTimer.expired(dir_delay)){
+    dir = Enc1.direction(ENC_delay);
+    DirTimer.update();
+  }
+  
+  if(dir == 1){
+    digitalWrite(ENC1_left,LOW);
+    digitalWrite(ENC1_right,HIGH);
+    /*Serial.print("ENC1 right = ");
+    Serial.print("HIGH");
+    Serial.println();*/
+  }else if(dir == -1){
+    digitalWrite(ENC1_left,HIGH);
+    digitalWrite(ENC1_right,LOW);
+    /*Serial.print(" ENC1 left = ");
+    Serial.println("HIGH");*/
+  }else {
+    digitalWrite(ENC1_left,LOW);
+    digitalWrite(ENC1_right,LOW);
+    //Serial.println("stop");
   }
 
-  //resetEnc();
-  /*Serial.println("");
-  Serial.print("ENC1 right = ");
-  Serial.print("LOW");
-  Serial.print(" ENC1 left = ");
-  Serial.print("LOW");*/
+  //Serial.println(digitalRead(ENC1_right));
+  
+  if(Enc1.click(ENC_click_delay) == LOW){
+    digitalWrite(ENC1_SW_OUT, LOW);
+    //Serial.println(" ENC1 click");
+  }else{
+    digitalWrite(ENC1_SW_OUT, HIGH);
+    //Serial.println(" ENC1 No click");
+  }
+    
 }
+
+  
