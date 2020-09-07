@@ -27,7 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 int ENC_delay = 0;
 int ENC_click_delay = 100;
-int dir_delay = 100; 
+int dir_delay = 40; 
 int dir = 0;
 
 Encoders_ Enc1(ENC1_CLK,ENC1_DT,ENC1_SW);
