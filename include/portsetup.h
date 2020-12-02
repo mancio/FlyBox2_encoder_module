@@ -1,12 +1,12 @@
 #ifndef PORTSETUP_h
 #define PORTSETUP_h
 
-#define ENC1_CLK 3
-#define ENC1_DT 2
-#define ENC1_SW 5
+#define ENC1_CLK 1
+#define ENC1_DT 0
+#define ENC1_SW 2
 
-#define ENC1_right 21
-#define ENC1_left 20
+#define ENC1_right 20
+#define ENC1_left 21
 #define ENC1_SW_OUT 19
 
 /**
